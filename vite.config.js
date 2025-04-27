@@ -11,6 +11,6 @@ export default defineConfig({
     emptyOutDir: true
   },
   preview: {
-    allowedHosts: 'all'
+    allowedHosts: ['api-service-webapp-ls673.kinsta.app', 'localhost', '0.0.0.0']
   }
 }); 
