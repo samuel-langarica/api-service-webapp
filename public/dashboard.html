@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Panel de Usuario - API Service">
+    <title>Panel de Usuario - API Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-xl font-bold text-gray-900">API Service</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button id="logoutButton" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Panel de Usuario</h2>
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- API Token Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Token de API</h3>
+                        <div class="mt-2">
+                            <p id="apiToken" class="text-sm text-gray-500 break-all">Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subscription Type Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Tipo de Suscripción</h3>
+                        <div class="mt-2">
+                            <p id="subscriptionType" class="text-sm text-gray-500">Cargando...</p>
+                            <p id="subscriptionDescription" class="text-sm text-gray-400 mt-1">Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Usage Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Uso de API</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                <span id="monthlyUsage">0</span> / <span id="monthlyQuota">0</span> llamadas
+                            </p>
+                            <p class="text-sm text-gray-500 mt-1">
+                                Restantes: <span id="remainingCalls">0</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Allowed Endpoints Card -->
+                <div class="bg-white overflow-hidden shadow rounded-lg col-span-full">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Endpoints Permitidos</h3>
+                        <div class="mt-2">
+                            <ul id="allowedEndpoints" class="text-sm text-gray-500 list-disc list-inside">
+                                Cargando...
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { getUserData } from './api.js';
+        import { logout } from './auth.js';
+
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const userData = await getUserData();
+                
+                // Update API Token
+                document.getElementById('apiToken').textContent = userData.apiToken;
+                
+                // Update Subscription Info
+                document.getElementById('subscriptionType').textContent = userData.subscriptionType;
+                document.getElementById('subscriptionDescription').textContent = userData.subscriptionDescription || 'Sin descripción';
+                
+                // Update API Usage
+                document.getElementById('monthlyUsage').textContent = userData.monthlyUsage;
+                document.getElementById('monthlyQuota').textContent = userData.monthlyQuota;
+                document.getElementById('remainingCalls').textContent = userData.remainingCalls;
+                
+                // Update Allowed Endpoints
+                const endpointsList = document.getElementById('allowedEndpoints');
+                endpointsList.innerHTML = '';
+                if (userData.allowedEndpoints.includes('*')) {
+                    endpointsList.innerHTML = '<li>Todos los endpoints</li>';
+                } else {
+                    userData.allowedEndpoints.forEach(endpoint => {
+                        const li = document.createElement('li');
+                        li.textContent = endpoint;
+                        endpointsList.appendChild(li);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                document.getElementById('apiToken').textContent = 'Error al cargar';
+                document.getElementById('subscriptionType').textContent = 'Error al cargar';
+                document.getElementById('monthlyUsage').textContent = 'Error';
+                document.getElementById('monthlyQuota').textContent = 'Error';
+                document.getElementById('remainingCalls').textContent = 'Error';
+                document.getElementById('allowedEndpoints').textContent = 'Error al cargar';
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            try {
+                await logout();
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Error logging out:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

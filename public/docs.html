@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentación de la API - API Service">
+    <title>Documentación de la API - API Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-xl font-bold text-gray-900">API Service</a>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <a href="login.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Iniciar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">Documentación de la API</h1>
+
+            <div class="bg-white shadow rounded-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">URL Base</h2>
+                <p class="text-gray-600 mb-4">Todas las peticiones deben realizarse a la siguiente URL base:</p>
+                <pre class="bg-gray-50 p-4 rounded-md text-sm text-gray-600">https://api-as-a-service-template-zavwr.kinsta.app/api/v1</pre>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Status Endpoint -->
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">GET /status</h2>
+                    <p class="text-gray-600 mb-4">Devuelve el estado básico del servidor.</p>
+                    
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        <h3 class="text-sm font-medium text-gray-900 mb-2">Encabezados</h3>
+                        <pre class="text-sm text-gray-600">Authorization: Bearer &lt;tu_token&gt;</pre>
+                    </div>
+
+                    <div class="mt-4">
+                        <h3 class="text-sm font-medium text-gray-900 mb-2">Respuesta de Ejemplo</h3>
+                        <pre class="bg-gray-50 p-4 rounded-md text-sm text-gray-600">{
+  "status": "ok"
+}</pre>
+                    </div>
+
+                    <div class="mt-4">
+                        <h3 class="text-sm font-medium text-gray-900 mb-2">Ejemplo con curl</h3>
+                        <pre class="bg-gray-50 p-4 rounded-md text-sm text-gray-600">curl -X GET "https://api-as-a-service-template-zavwr.kinsta.app/api/v1/status" \
+  -H "Authorization: Bearer your_api_token"</pre>
+                    </div>
+                </div>
+
+                <!-- Hello Endpoint -->
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">GET /hello</h2>
+                    <p class="text-gray-600 mb-4">Devuelve un mensaje sencillo de saludo.</p>
+                    
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        <h3 class="text-sm font-medium text-gray-900 mb-2">Encabezados</h3>
+                        <pre class="text-sm text-gray-600">Authorization: Bearer &lt;tu_token&gt;</pre>
+                    </div>
+
+                    <div class="mt-4">
+                        <h3 class="text-sm font-medium text-gray-900 mb-2">Respuesta de Ejemplo</h3>
+                        <pre class="bg-gray-50 p-4 rounded-md text-sm text-gray-600">{
+  "message": "Hello, World!"
+}</pre>
+                    </div>
+
+                    <div class="mt-4">
+                        <h3 class="text-sm font-medium text-gray-900 mb-2">Ejemplo con curl</h3>
+                        <pre class="bg-gray-50 p-4 rounded-md text-sm text-gray-600">curl -X GET "https://api-as-a-service-template-zavwr.kinsta.app/api/v1/hello" \
+  -H "Authorization: Bearer your_api_token"</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500 text-sm">
+                © 2024 API Service. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+</body>
+</html> 
